@@ -19,7 +19,7 @@ function App() {
           </Navbar>
         </header>
         <main>
-          <Container>
+          <Container className="mt-4">
             <Routes>
               <Route path="/medicines/:slug" element={<MedicineScreen />} />
               <Route path="/" element={<HomeScreen />} />

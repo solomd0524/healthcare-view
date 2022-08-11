@@ -29,9 +29,12 @@ main {
 .medicine img {
   width: 100%;
   max-width: 400px;
-  size: 679px x 829px;
 }
 
 .medicine-info {
   padding: 1rem;
+}
+
+.img-large{
+  max-width: 100%;
 }
