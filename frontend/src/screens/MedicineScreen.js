@@ -8,7 +8,9 @@ import Badge from 'react-bootstrap/Badge';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Helmet } from 'react-helmet-async';
-
+import LoadingBox from '../components/LoadingBox';
+import MessageBox from '../components/MessageBox';
+import { getError } from '../util';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -40,7 +42,7 @@ function MedicineScreen() {
         const result = await axios.get(`/api/medicines/slug/${slug}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: err.message });
+        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
       //   setMedicines(result.data);
     };
@@ -48,18 +50,18 @@ function MedicineScreen() {
   }, [slug]);
 
   return loading ? (
-    <div>Loading....</div>
+    <LoadingBox />
   ) : error ? (
-    <div>{error}</div>
+    <MessageBox variant="danger">{error}</MessageBox>
   ) : (
     <div>
       <Row>
         <Col md={6}>
-          <img 
-             className="img-large"
-             src={medicine.image}
-             alt={medicine.name}
-            ></img>
+          <img
+            className="img-large"
+            src={medicine.image}
+            alt={medicine.name}
+          ></img>
         </Col>
         <Col md={3}>
           <ListGroup variant="flush">
@@ -67,18 +69,14 @@ function MedicineScreen() {
               <Helmet>
                 <title>{medicine.name}</title>
               </Helmet>
-               <h1>{medicine.name}</h1>
+              <h1>{medicine.name}</h1>
             </ListGroup.Item>
+            <ListGroup.Item>Price : ${medicine.price}</ListGroup.Item>
             <ListGroup.Item>
-              Price : ${medicine.price}
-            </ListGroup.Item>
-            <ListGroup.Item>
-               <strong>Description:</strong>
+              <strong>Description:</strong>
               <p>{medicine.description}</p>
             </ListGroup.Item>
-
           </ListGroup>
-          
         </Col>
         <Col md={3}>
           <Card>
@@ -93,20 +91,20 @@ function MedicineScreen() {
                 <ListGroup.Item>
                   <Row>
                     <Col>Status</Col>
-                    <Col>{medicine.countInStock>0?
-                    <Badge bg="success">In Stock</Badge>
-                    :
-                    <Badge bg="danger">Unavailable</Badge>
-                  }</Col>
+                    <Col>
+                      {medicine.countInStock > 0 ? (
+                        <Badge bg="success">In Stock</Badge>
+                      ) : (
+                        <Badge bg="danger">Unavailable</Badge>
+                      )}
+                    </Col>
                   </Row>
                 </ListGroup.Item>
 
                 {medicine.countInStock > 0 && (
                   <ListGroup.Item>
                     <div className="d-grid">
-                      <Button variant="primary">
-                        Add To Cart
-                      </Button>
+                      <Button variant="primary">Add To Cart</Button>
                     </div>
                   </ListGroup.Item>
                 )}
