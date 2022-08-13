@@ -2,10 +2,18 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import MedicineScreen from './screens/MedicineScreen';
 import Navbar from 'react-bootstrap/Navbar';
+import Badge from 'react-bootstrap/Badge';
+import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Store } from './Store';
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 function App() {
+  const { state } = useContext(Store);
+  const { cart } = state;
+
   return (
     <BrowserRouter>
       <div className="d-flex flex-column site-container">
@@ -15,6 +23,16 @@ function App() {
               <LinkContainer to="/">
                 <Navbar.Brand>Capstone-Medicine</Navbar.Brand>
               </LinkContainer>
+              <Nav className="me-auto">
+                <Link to="/cart" className="nav-link">
+                  Cart
+                  {cart.cartItems.length > 0 && (
+                    <Badge pill bg="danger">
+                      {cart.cartItems.length}
+                    </Badge>
+                  )}
+                </Link>
+              </Nav>
             </Container>
           </Navbar>
         </header>
