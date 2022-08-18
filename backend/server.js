@@ -8,11 +8,20 @@ app.get('/api/medicines', (req, res) => {
 });
 
 app.get('/api/medicines/slug/:slug', (req, res) => {
-  const medicine = data.medicines.find(x=> x.slug ===req.params.slug);
-  if(medicine) {
+  const medicine = data.medicines.find((x) => x.slug === req.params.slug);
+  if (medicine) {
     res.send(medicine);
   } else {
-    res.status(404).send({message: 'Medicine Not Found'})
+    res.status(404).send({ message: 'Medicine Not Found' });
+  }
+});
+
+app.get('/api/medicines/:id', (req, res) => {
+  const medicine = data.medicines.find((x) => x._id === req.params.id);
+  if (medicine) {
+    res.send(medicine);
+  } else {
+    res.status(404).send({ message: 'Medicine Not Found' });
   }
 });
 
