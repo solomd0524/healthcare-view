@@ -3,7 +3,7 @@ const data = {
     {
       _id: '1',
       name: 'Advil',
-      slug: 'Advil-Liqui-Gels',
+      slug: 'Advil-Liquid-Gels',
       category: 'Pain Management',
       image: '/images/p1.jpg', //679px x 829px
       price: 24.00,
