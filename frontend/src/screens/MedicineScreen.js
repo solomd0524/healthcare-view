@@ -41,7 +41,7 @@ function MedicineScreen() {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get(`/api/medicines/slug/${slug}`);
+        const result = await axios.get(`/api/user/medicines/${slug}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
@@ -54,9 +54,9 @@ function MedicineScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart } = state;
   const addToCartHandler = async () => {
-    const existItem = cart.cartItems.find((x) => x._id === medicine._id);
+    const existItem = cart.cartItems.find((x) => x.medicineId === medicine.medicineId);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/api/medicines/${medicine._id}`);
+    const { data } = await axios.get(`/api/user/medicines/${medicine.medicineId}`);
     if (data.countInStock < quantity) {
       window.alert('Medicine is out of stock');
       return;

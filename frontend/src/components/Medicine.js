@@ -14,9 +14,9 @@ function Medicine(props) {
   } = state;
 
   const addToCartHandler = async (item) => {
-    const existItem = cartItems.find((x) => x._id === medicine._id);
+    const existItem = cartItems.find((x) => x.medicineId === medicine.medicineId);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/api/medicines/${item._id}`);
+    const { data } = await axios.get(`/api/user/medicines/${item.medicineId}`);
     if (data.countInStock < quantity) {
       window.alert('Medicine is out of stock');
       return;
@@ -28,8 +28,8 @@ function Medicine(props) {
   };
 
   return (
-    <Card key={medicine.slug}>
-      <Link to={`/medicines/${medicine.slug}`}>
+    <Card key={medicine.medicineId}>
+      <Link to={`/medicines/${medicine.medicineId}`}>
         <img
           src={medicine.image}
           className="card-img-top"
@@ -37,7 +37,7 @@ function Medicine(props) {
         />
       </Link>
       <Card.Body>
-        <Link to={`/medicines/${medicine.slug}`}>
+        <Link to={`/medicines/${medicine.medicineId}`}>
           <Card.Title>{medicine.name}</Card.Title>
         </Link>
         <Card.Text>${medicine.price}</Card.Text>

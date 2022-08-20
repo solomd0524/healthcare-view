@@ -22,7 +22,7 @@ export default function CartScreen() {
   };
 
   const updateCartHandler = async (item, quantity) => {
-    const { data } = await axios.get(`/api/medicines/${item._id}`);
+    const { data } = await axios.get(`/api/user/medicines/${item.medicineId}`);
     if (data.countInStock < quantity) {
       window.alert('Medicine is out of stock');
       return;
@@ -52,7 +52,7 @@ export default function CartScreen() {
           ) : (
             <ListGroup>
               {cartItems.map((item) => (
-                <ListGroup.Item key={item._id}>
+                <ListGroup.Item key={item.medicineId}>
                   <Row className="align-items-center">
                     <Col md={2}>
                       <img
@@ -60,7 +60,9 @@ export default function CartScreen() {
                         alt={item.name}
                         className="img-fluid rounded img-thumbnail"
                       ></img>{' '}
-                      <Link to={`/medicines/${item.slug}`}>{item.name}</Link>
+                      <Link to={`/medicines/${item.medicineId}`}>
+                        {item.name}
+                      </Link>
                     </Col>
                     <Col md={2}>
                       <Button
